@@ -1,0 +1,508 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "version": "1.0.0",
+        "title": "User Service",
+        "description": "http://localhost:4000/api/",
+        "termsOfService": "http://swagger.io/terms/",
+        "license": {
+            "name": "Amolnama",
+            "url": "http://localhost:4000"
+        }
+    },
+    "basePath": "/api",
+    "schemes": [
+        "http",
+        "https"
+    ],
+    "consumes": [
+        "application/json"
+    ],
+    "produces": [
+        "application/json"
+    ],
+    "paths": {
+        "/users/signin": {
+            "post": {
+                "tags": [
+                    "Users"
+                ],
+                "description": "Sign in using phone number and pin",
+                "produces": [
+                    "application/json"
+                ],
+                "consumes": [
+                    "application/json"
+                ],
+                "parameters": [{
+                    "name": "SignIn Parameters",
+                    "in": "body",
+                    "description": "Get user Details from Database",
+                    "required": true,
+                    "schema": {
+                        "$ref": "#/definitions/singin"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK"
+                    }
+                }
+            }
+        },
+        "/users/": {
+            "post": {
+                "summary": "Create user",
+                "tags": [
+                    "Users"
+                ],
+                "parameters": [{
+                    "name": "user",
+                    "in": "body",
+                    "description": "User details",
+                    "schema": {
+                        "$ref": "#/definitions/users"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/users"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Get user list with given column name",
+                "tags": [
+                    "Users"
+                ],
+                "parameters": [{
+                        "name": "currentPage",
+                        "in": "query",
+                        "required": false,
+                        "description": "current page (for showing *all items send 'all')",
+                        "type": "string"
+                    },
+                    {
+                        "name": "itemPerPage",
+                        "in": "query",
+                        "required": false,
+                        "description": "items",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/users"
+                        }
+                    }
+                }
+            },
+            "put": {
+                "summary": "update user",
+                "tags": [
+                    "Users"
+                ],
+                "parameters": [{
+                    "name": "user",
+                    "in": "body",
+                    "description": "User details",
+                    "schema": {
+                        "$ref": "#/definitions/users"
+                    }
+                }],
+                "security": [{
+                    "Bearer": {
+                        "type": "apiKey",
+                        "name": "authorization",
+                        "in": "header"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/users"
+                        }
+                    }
+                }
+            }
+        },
+        "/users/{userId}": {
+            "parameters": [
+                {
+                    "name": "userId",
+                    "in": "path",
+                    "required": true,
+                    "description": "Primary key of user table",
+                    "type": "string"
+                }
+            ],
+            "get": {
+                "summary": "Get user details with given user id",
+                "tags": [
+                    "Users"
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/users"
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "summary": "Delete user details with given user id",
+                "tags": [
+                    "Users"
+                ],
+                "security": [{
+                    "Bearer": {
+                        "type": "apiKey",
+                        "name": "authorization",
+                        "in": "header"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/users"
+                        }
+                    }
+                }
+            }
+        },
+        "/rent/": {
+            "post": {
+                "summary": "Create rent",
+                "tags": [
+                    "Rent"
+                ],
+                "security": [{
+                    "Bearer": {
+                        "type": "apiKey",
+                        "name": "authorization",
+                        "in": "header"
+                    }
+                }],
+                "parameters": [{
+                    "name": "rent",
+                    "in": "body",
+                    "description": "Rent details",
+                    "schema": {
+                        "$ref": "#/definitions/rent"
+                    }
+                }],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/rent"
+                        }
+                    }
+                }
+            },
+            "get": {
+                "summary": "Get rent list with given column name",
+                "tags": [
+                    "Rent"
+                ],
+                "parameters": [{
+                        "name": "currentPage",
+                        "in": "query",
+                        "required": false,
+                        "description": "current page (for showing *all items send 'all')",
+                        "type": "string"
+                    },
+                    {
+                        "name": "itemPerPage",
+                        "in": "query",
+                        "required": false,
+                        "description": "items",
+                        "type": "string"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "$ref": "#/definitions/rent"
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "definitions": {
+        "singin": {
+            "properties": {
+                "phoneNumber": {
+                    "required": true,
+                    "type": "string",
+                    "example": "+8801772515721"
+                },
+                "pin": {
+                    "required": true,
+                    "type": "string",
+                    "example": "12345678"
+                }
+            }
+        },
+        "users": {
+            "properties": {
+                "userId": {
+                    "required": false,
+                    "type": "string"
+                },
+                "userType": {
+                    "required": false,
+                    "type": "integer"
+                },
+                "ownerId": {
+                    "required": false,
+                    "type": "string"
+                },
+                "fullName": {
+                    "required": false,
+                    "type": "string"
+                },
+                "gender": {
+                    "required": false,
+                    "type": "integer"
+                },
+                "phoneNumber": {
+                    "required": false,
+                    "type": "string"
+                },
+                "facebookId": {
+                    "required": false,
+                    "type": "string"
+                },
+                "email": {
+                    "required": false,
+                    "type": "string"
+                },
+                "permanentDistrict": {
+                    "required": false,
+                    "type": "string"
+                },
+                "currentDistrict": {
+                    "required": false,
+                    "type": "string"
+                },
+                "currentUpazila": {
+                    "required": false,
+                    "type": "string"
+                },
+                "profession": {
+                    "required": false,
+                    "type": "string"
+                },
+                "instituteName": {
+                    "required": false,
+                    "type": "string"
+                },
+                "religion": {
+                    "required": false,
+                    "type": "string"
+                },
+                "dateOfBirth": {
+                    "required": false,
+                    "type": "string"
+                },
+                "pin": {
+                    "required": false,
+                    "type": "string"
+                },
+                "isActive": {
+                    "required": false,
+                    "type": "boolean"
+                }
+            }
+        },
+        "rent": {
+            "properties": {
+                "rentId": {
+                    "type": "integer",
+                    "required": false
+                },
+                "userId": {
+                    "type": "string",
+                    "required": true
+                },
+                "ownerId": {
+                    "type": "string",
+                    "required": false
+                },
+                "rentType": {
+                    "type": "integer",
+                    "required": true
+                },
+                "district": {
+                    "type": "string",
+                    "required": true
+                },
+                "address": {
+                    "type": "string",
+                    "required": true
+                },
+                "roadNumber": {
+                    "type": "string",
+                    "required": false
+                },
+                "houseNumber": {
+                    "type": "string",
+                    "required": false
+                },
+                "seatType": {
+                    "type": "integer",
+                    "required": true
+                },
+                "floorNumber": {
+                    "type": "integer",
+                    "required": false
+                },
+                "seatNumber": {
+                    "type": "integer",
+                    "required": false
+                },
+                "bedRoomNumber": {
+                    "type": "integer",
+                    "required": false
+                },
+                "bathRoomNumber": {
+                    "type": "integer",
+                    "required": false
+                },
+                "balconyNumber": {
+                    "type": "integer",
+                    "required": false
+                },
+                "size": {
+                    "type": "string",
+                    "required": false
+                },
+                "seatDescription": {
+                    "type": "string",
+                    "required": false
+                },
+                "condition": {
+                    "type": "string",
+                    "required": false
+                },
+                "price": {
+                    "type": "integer",
+                    "required": true
+                },
+                "requiredGender": {
+                    "type": "integer",
+                    "required": false
+                },
+                "requiredReligion": {
+                    "type": "integer",
+                    "required": false
+                },
+                "availableDate": {
+                    "type": "string",
+                    "required": true
+                },
+                "contractNumber": {
+                    "type": "string",
+                    "required": true
+                },
+                "additionalContractNumber": {
+                    "type": "string",
+                    "required": false
+                },
+                "facebookId": {
+                    "type": "string",
+                    "required": false
+                },
+                "email": {
+                    "type": "string",
+                    "required": false
+                },
+                "postingDate": {
+                    "type": "string",
+                    "required": true
+                },
+                "isActive": {
+                    "type": "boolean",
+                    "required": false
+                }
+            }
+        },
+        "usersType": {
+            "properties": {
+                "userTypeId": {
+                    "required": false,
+                    "type": "integer"
+                },
+                "userTypeName": {
+                    "required": true,
+                    "type": "string"
+                }
+            }
+        },
+        "response": {
+            "properties": {
+                "status": {
+                    "type": "boolean",
+                    "example": true
+                },
+                "httpStatusCode": {
+                    "type": "integer"
+                },
+                "message": {
+                    "type": "string",
+                    "example": "400 Bad Request"
+                }
+            }
+        },
+        "400error": {
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "400 Bad Request"
+                }
+            }
+        },
+        "403error": {
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "Access Denied"
+                }
+            }
+        },
+        "404error": {
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "Not Found"
+                }
+            }
+        },
+        "500error": {
+            "properties": {
+                "message": {
+                    "type": "string",
+                    "example": "Internal Server Error"
+                }
+            }
+        }
+    },
+    "securityDefinitions": {
+        "Bearer": {
+            "type": "apiKey",
+            "name": "authorization",
+            "in": "header"
+        }
+    }
+}
